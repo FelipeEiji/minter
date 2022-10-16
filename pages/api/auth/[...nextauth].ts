@@ -51,7 +51,6 @@ export default NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log("token", token, "user", user);
       // eslint-disable-next-line no-unused-expressions
       user && (token.user = user);
       return token;

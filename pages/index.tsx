@@ -1,8 +1,11 @@
+import { Center, Flex, Spacer, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import ConnectButton from "../src/components/ConnectButton";
 import styles from "../styles/Home.module.css";
+import logo from "../src/assets/logo.svg";
+import { ReactSVG } from "react-svg";
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +16,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <ConnectButton />
+        <Flex alignItems='center' justifyContent='center' minHeight='100vh'>
+          <VStack>
+            <ReactSVG
+              className="logo"
+              src={'/logo.svg'}
+              style={{ padding: 0 }}
+            />
+            <Spacer />
+            <ConnectButton />
+          </VStack>
+        </Flex>
       </main>
     </div>
   );
