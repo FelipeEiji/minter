@@ -1,6 +1,6 @@
 import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/evm-utils";
-import { withAuth } from "../../src/components/with-auth";
+import { withAuth } from "../../src/components/WithAuth";
 
 const Native = ({ address, nativeBalance }: any) => {
   return (
@@ -11,7 +11,7 @@ const Native = ({ address, nativeBalance }: any) => {
   );
 };
 
-export const getServerSideProps = withAuth(async () => {
+export const getServerSideProps = async () => {
   await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
 
   const address = "0xbfC1577355F2254f4C3d833a2389b7020A15f2A8";
@@ -27,6 +27,6 @@ export const getServerSideProps = withAuth(async () => {
       nativeBalance: nativeBalance.result.balance.ether,
     },
   };
-});
+};
 
-export default Native;
+export default withAuth(Native);

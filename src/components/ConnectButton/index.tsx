@@ -1,32 +1,18 @@
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useAccount, useConnect, useDisconnect, useSignMessage } from "wagmi";
-import apiPost from "../../utils/api-post";
+import { signIn, signOut } from "next-auth/react";
+import { useMoralis } from 'react-moralis';
 import { Button, Text, HStack, Avatar, useToast } from "@chakra-ui/react";
 import { getEllipsisTxt } from "../../utils/format";
+import { CHAIN_ID } from "../../config/constants";
 
 const ConnectButton = () => {
-  const { connectAsync } = useConnect({ connector: new InjectedConnector() });
-  const { disconnectAsync } = useDisconnect();
-  const { isConnected } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  const { logout, authenticate, isAuthenticated, account } = useMoralis();
   const toast = useToast();
-  const { data } = useSession();
 
   const handleAuth = async () => {
-    if (isConnected) {
-      await disconnectAsync();
-    }
     try {
-      const { account, chain } = await connectAsync();
-
-      const userData = { address: account, chain: chain.id, network: "evm" };
-
-      const { message } = await apiPost("/auth/request-message", userData);
-
-      const signature = await signMessageAsync({ message });
-
-      await signIn("credentials", { message, signature, callbackUrl: "/" });
+      await authenticate({
+        chainId: CHAIN_ID
+      })
     } catch (e) {
       toast({
         title: "Oops, something is wrong...",
@@ -39,15 +25,15 @@ const ConnectButton = () => {
   };
 
   const handleDisconnect = async () => {
-    await disconnectAsync();
+    await logout();
     signOut({ callbackUrl: "/" });
   };
 
-  if (data?.user) {
+  if (isAuthenticated && account) {
     return (
       <HStack onClick={handleDisconnect} cursor={"pointer"}>
         <Avatar size="xs" />
-        <Text fontWeight="medium">{getEllipsisTxt(data.user.address)}</Text>
+        <Text fontWeight="medium">{getEllipsisTxt(account)}</Text>
       </HStack>
     );
   }
