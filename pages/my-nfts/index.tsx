@@ -42,6 +42,7 @@ const MyNFTs: React.FC<Props> = ({ nfts }) => {
           name={nft.name}
           symbol={nft.symbol}
           tokenURI={nft.token_uri}
+          tokenId={nft.token_id}
         />
       ))}
     </>
