@@ -1,7 +1,7 @@
 import { Container, Heading, VStack } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { useMoralis, useMoralisFile, useWeb3ExecuteFunction } from "react-moralis";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import FileUploader, {
@@ -14,6 +14,7 @@ import { NFT_CONTRACT_ADDRESS } from "../../src/config/constants";
 const Mint = () => {
   const { file } = useFileUploader();
   const { data } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => console.log(data), [data]);
 
@@ -31,22 +32,28 @@ const Mint = () => {
   });
   
   const onClickCreate = async () => {
-    if (file) {
-      const moralisFile = await saveFile(file.name, file, {
-        saveIPFS: true,
-      });
-
-      if (!moralisFile) throw new Error('Error while uploading to IPFS')
-
-      await safeMint({
-        params: {
+    try {
+      setIsLoading(true);
+      if (file) {
+        const moralisFile = await saveFile(file.name, file, {
+          saveIPFS: true,
+        });
+  
+        if (!moralisFile) throw new Error('Error while uploading to IPFS')
+  
+        await safeMint({
           params: {
-            to: account,
-            uri: moralisFile.ipfs(),
+            params: {
+              to: account,
+              uri: moralisFile.ipfs(),
+            }
           }
-        }
-      })
+        })
+      }
+    } finally {
+      setIsLoading(false);
     }
+    
   };
 
   return (
@@ -56,10 +63,10 @@ const Mint = () => {
         <FileUploader />
         <Button
           colorScheme="blue"
-          disabled={!file || isUploading}
+          disabled={!file || isLoading}
           onClick={onClickCreate}
         >
-          Create {isUploading && <Spinner />}
+          Create {isLoading && <Spinner />}
         </Button>
       </VStack>
     </Container>

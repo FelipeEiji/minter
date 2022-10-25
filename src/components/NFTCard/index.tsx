@@ -12,11 +12,6 @@ import {
 import { Eth } from "@web3uikit/icons";
 import { FC } from "react";
 import { EvmNftContractType } from "@moralisweb3/evm-utils";
-import { useWeb3ExecuteFunction } from "react-moralis";
-import MinterToken from "../../../contract/artifacts/contracts/MinterToken.sol/MinterToken.json";
-import Marketplace from "../../../contract/artifacts/contracts/Marketplace.sol/Marketplace.json";
-import { MARKETPLACE_CONTRACT_ADDRESS, NFT_CONTRACT_ADDRESS } from "../../config/constants";
-import { useMoralis } from 'react-moralis'
 
 interface NFTCardProps {
   amount?: number | undefined;
@@ -25,6 +20,7 @@ interface NFTCardProps {
   symbol?: string | undefined;
   tokenURI?: string;
   tokenId: string;
+  children: React.ReactNode,
 }
 
 const NFTCard: FC<NFTCardProps> = ({
@@ -33,80 +29,12 @@ const NFTCard: FC<NFTCardProps> = ({
   name,
   symbol,
   tokenURI,
-  tokenId,
+  children,
 }) => {
   const bgColor = useColorModeValue("none", "gray.700");
   const borderColor = useColorModeValue("gray.200", "gray.700");
   const descBgColor = useColorModeValue("gray.100", "gray.600");
 
-  const { account } = useMoralis();
-
-  const {
-    fetch: createMarketItem,
-    isFetching,
-    isLoading,
-  } = useWeb3ExecuteFunction({
-    contractAddress: MARKETPLACE_CONTRACT_ADDRESS,
-    abi: Marketplace.abi,
-    functionName: "createMarketItem",
-  });
-
-  const {
-    fetch: isApprovedForAll,
-    isFetching: isApprovalForAllFetching,
-    isLoading: isApprovalForAllIsLoading,
-  } = useWeb3ExecuteFunction({
-    contractAddress: NFT_CONTRACT_ADDRESS,
-    abi: MinterToken.abi,
-    functionName: "isApprovedForAll",
-  });
-
-  const {
-    fetch: setApprovalForAll,
-    isFetching: setApprovalForAllFetching,
-    isLoading: setApprovalForAllIsLoading,
-  } = useWeb3ExecuteFunction({
-    contractAddress: NFT_CONTRACT_ADDRESS,
-    abi: MinterToken.abi,
-    functionName: "setApprovalForAll",
-  });
-
-  const handleCreateMarketItem = async () => {
-    const isApproved = await isApprovedForAll({
-      params: {
-        params: {
-          owner: account,
-          operator: MARKETPLACE_CONTRACT_ADDRESS,
-        }
-      }
-    })
-
-    console.log({ isApproved })
-
-    if (!isApproved) {
-      const setApprovalResult = await setApprovalForAll({
-        params: {
-          params: {
-            operator: MARKETPLACE_CONTRACT_ADDRESS,
-            approved: true,
-          }
-        }
-      })
-
-      console.log({ setApprovalResult })
-
-    }
-
-    await createMarketItem({
-      params: {
-        params: {
-          nftContract: NFT_CONTRACT_ADDRESS,
-          tokenId,
-          price: 1,
-        }
-      }
-    })
-  }
 
   return (
     <Box
@@ -163,16 +91,8 @@ const NFTCard: FC<NFTCardProps> = ({
         </Box>
       </SimpleGrid>
 
-      <Center>
-        <Button
-          isLoading={isLoading}
-          loadingText="Submitting"
-          colorScheme="teal"
-          variant="outline"
-          onClick={handleCreateMarketItem}
-        >
-          Create Market Item
-        </Button>
+      <Center marginTop="3">
+       { children }
       </Center>
     </Box>
   );
