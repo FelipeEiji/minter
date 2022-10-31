@@ -26,7 +26,6 @@ async function main() {
 
   // console.log("MinterToken deployed to:", MTK.address);
 
-
   // const MinterToken = await ethers.getContractFactory("MinterToken");
   // const MTK = await MinterToken.deploy();
 
@@ -40,7 +39,6 @@ async function main() {
   await marketplace.deployed();
 
   console.log("Marketplace deployed to:", marketplace.address);
-
 }
 
 // We recommend this pattern to be able to use async/await everywhere

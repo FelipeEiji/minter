@@ -50,9 +50,9 @@ contract Marketplace is Ownable, ReentrancyGuard {
         require(price > 0, "Marketplace: Price must be greater than 0");
 
         IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
-        string name = IERC721Metadata(nftContract).name()
-        string symbol = IERC721Metadata(nftContract).symbol()
-        string tokenURI = IERC721Metadata(nftContract).tokenURI(tokenId)
+        string memory name = IERC721Metadata(nftContract).name();
+        string memory symbol = IERC721Metadata(nftContract).symbol();
+        string memory tokenURI = IERC721Metadata(nftContract).tokenURI(tokenId);
 
         _itemIds.increment();
         uint256 itemId = _itemIds.current();
