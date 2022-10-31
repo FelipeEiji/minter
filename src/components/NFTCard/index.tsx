@@ -15,7 +15,6 @@ import { EvmNftContractType } from "@moralisweb3/evm-utils";
 
 interface NFTCardProps {
   amount?: number | undefined;
-  contractType: EvmNftContractType;
   name?: string | undefined;
   symbol?: string | undefined;
   tokenURI?: string;
@@ -25,7 +24,6 @@ interface NFTCardProps {
 
 const NFTCard: FC<NFTCardProps> = ({
   amount,
-  contractType,
   name,
   symbol,
   tokenURI,
@@ -56,15 +54,8 @@ const NFTCard: FC<NFTCardProps> = ({
         />
       </Box>
       <Box mt="1" fontWeight="semibold" as="h4" noOfLines={1} marginTop={2}>
-        {name}
+        {name} <Matic fontSize="20px" />
       </Box>
-      <HStack alignItems={"center"}>
-        <Box as="h4" noOfLines={1} fontWeight="medium" fontSize="smaller">
-          ContractType - {contractType}
-        </Box>
-
-        <Matic fontSize="20px" />
-      </HStack>
       <SimpleGrid
         columns={2}
         spacing={4}

@@ -6,6 +6,7 @@ import type { AppProps } from "next/app";
 import { FileUploaderProvider } from "../src/components/FileUploader";
 import { useMoralis, MoralisProvider } from "react-moralis";
 import React, { useEffect } from "react";
+import nookies from 'nookies';
 
 const config = {
   initialColorMode: "dark",
@@ -26,6 +27,7 @@ const WithMoralis: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     enableWeb3,
     isAuthenticated,
     isWeb3EnableLoading,
+    account
   } = useMoralis();
 
   useEffect(() => {
@@ -37,6 +39,14 @@ const WithMoralis: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     )
       enableWeb3();
   }, [isAuthenticated, isWeb3Enabled]);
+
+  useEffect(() => {
+    if (account) {
+      nookies.set(null, 'account', account)
+    } else {
+      nookies.destroy(null, 'account')
+    }
+  }, [account])
 
   return <>{children}</>;
 };

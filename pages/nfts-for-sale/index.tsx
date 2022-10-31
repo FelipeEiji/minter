@@ -29,12 +29,11 @@ const NFTsForSale: React.FC<Props> = ({ nfts }) => {
       {/* <code style={{ whiteSpace: 'pre-line' }}>{ JSON.stringify(marketItems.data, null, 2)}</code> */}
       {marketItems.data.map((nft) => (
         <NFTCard
-          contractType={"ERC721 - Mock"}
           amount={nft.get("price")}
           key={nft.get("tokenId")}
-          name={"MinterToken - Mock"}
-          symbol={"MTK - Mock"}
-          tokenURI={""}
+          name={nft.get("name")}
+          symbol={nft.get("symbol")}
+          tokenURI={nft.get("tokenURI")}
           tokenId={nft.get("tokenId")}
         >
           {nft.get("seller") !== account && (
