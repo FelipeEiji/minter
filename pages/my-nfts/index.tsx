@@ -32,7 +32,7 @@ const MyNFTs: React.FC<Props> = ({ nfts }) => {
 export const getServerSideProps = async () => {
   await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
 
-  const address = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+  const address = "0x25857a4aCB6eCa699f46176E527C1693012A0dF4";
 
   const nfts = await Moralis.EvmApi.nft.getWalletNFTs({
     chain: CHAIN_ID,

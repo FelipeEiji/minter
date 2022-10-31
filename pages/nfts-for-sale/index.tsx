@@ -1,5 +1,5 @@
 import { withAuth } from "../../src/components/WithAuth";
-import { useMoralisQuery } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 import { Spinner } from "@chakra-ui/react";
 import Moralis from "moralis";
 import {
@@ -17,23 +17,29 @@ interface Props {
 }
 
 const NFTsForSale: React.FC<Props> = ({ nfts }) => {
-    const marketItems = useMoralisQuery('MarketItem')
-    console.log(JSON.stringify(marketItems.data, null, 2))
-    
+  const { account } = useMoralis();
+
+  const marketItems = useMoralisQuery("MarketItem", (query) =>
+    query.notEqualTo("sold", true).notEqualTo("seller", account)
+  );
+  console.log(JSON.stringify(marketItems.data, null, 2));
+
   return (
     <>
-    {/* <code style={{ whiteSpace: 'pre-line' }}>{ JSON.stringify(marketItems.data, null, 2)}</code> */}
-      {nfts.result.map((nft) => (
+      {/* <code style={{ whiteSpace: 'pre-line' }}>{ JSON.stringify(marketItems.data, null, 2)}</code> */}
+      {marketItems.data.map((nft) => (
         <NFTCard
-          contractType={nft.contract_type}
-          amount={Number(nft.amount)}
-          key={nft.token_id}
-          name={nft.name}
-          symbol={nft.symbol}
-          tokenURI={nft.token_uri}
-          tokenId={nft.token_id}
+          contractType={"ERC721 - Mock"}
+          amount={nft.get("price")}
+          key={nft.get("tokenId")}
+          name={"MinterToken - Mock"}
+          symbol={"MTK - Mock"}
+          tokenURI={""}
+          tokenId={nft.get("tokenId")}
         >
-            <BuyButton tokenId={nft.token_id}/>
+          {nft.get("seller") !== account && (
+            <BuyButton itemId={nft.get("itemId")} price={nft.get("price")} />
+          )}
         </NFTCard>
       ))}
     </>

@@ -8,10 +8,11 @@ import MinterToken from "../../../contract/artifacts/contracts/MinterToken.sol/M
 import Marketplace from "../../../contract/artifacts/contracts/Marketplace.sol/Marketplace.json";
 
 interface ButtonProps {
-  tokenId: string;
+  itemId: string;
+  price: number;
 }
 
-const BuyButton: React.FC<ButtonProps> = ({ tokenId }) => {
+const BuyButton: React.FC<ButtonProps> = ({ itemId, price }) => {
   const {
     fetch: createMarketSale,
     isFetching,
@@ -23,16 +24,22 @@ const BuyButton: React.FC<ButtonProps> = ({ tokenId }) => {
   });
 
   const handleBuy = async () => {
-
-    await createMarketSale({
-      params: {
+    try {
+      const result = await createMarketSale({
         params: {
-          nftContract: NFT_CONTRACT_ADDRESS,
-          tokenId,
-          price: 1,
+          params: {
+            nftContract: NFT_CONTRACT_ADDRESS,
+            itemId: itemId,
+          },
+          msgValue: Number(price),
         },
-      },
-    });
+      });
+
+      console.log({ result })
+    } catch (err) {
+      console.error(err)
+    }
+  
   };
 
   return (

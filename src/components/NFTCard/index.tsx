@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { Eth } from "@web3uikit/icons";
+import { Matic } from "@web3uikit/icons";
 import { FC } from "react";
 import { EvmNftContractType } from "@moralisweb3/evm-utils";
 
@@ -60,10 +60,10 @@ const NFTCard: FC<NFTCardProps> = ({
       </Box>
       <HStack alignItems={"center"}>
         <Box as="h4" noOfLines={1} fontWeight="medium" fontSize="smaller">
-          {contractType}
+          ContractType - {contractType}
         </Box>
 
-        <Eth fontSize="20px" />
+        <Matic fontSize="20px" />
       </HStack>
       <SimpleGrid
         columns={2}

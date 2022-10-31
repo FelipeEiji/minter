@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
 
 contract Marketplace is Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -19,6 +20,9 @@ contract Marketplace is Ownable, ReentrancyGuard {
         address payable owner;
         uint256 price;
         bool sold;
+        string name;
+        string symbol;
+        string tokenURI;
     }
 
     mapping(uint256 => MarketItem) private idToMarketItem;
@@ -30,8 +34,12 @@ contract Marketplace is Ownable, ReentrancyGuard {
         address seller,
         address owner,
         uint256 price,
-        bool sold
+        bool sold,
+        string name,
+        string symbol,
+        string tokenURI
     );
+
     event MarketItemSold(uint256 indexed itemId, address owner);
 
     function createMarketItem(
@@ -42,6 +50,9 @@ contract Marketplace is Ownable, ReentrancyGuard {
         require(price > 0, "Marketplace: Price must be greater than 0");
 
         IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
+        string name = IERC721Metadata(nftContract).name()
+        string symbol = IERC721Metadata(nftContract).symbol()
+        string tokenURI = IERC721Metadata(nftContract).tokenURI(tokenId)
 
         _itemIds.increment();
         uint256 itemId = _itemIds.current();
@@ -53,7 +64,10 @@ contract Marketplace is Ownable, ReentrancyGuard {
             payable(msg.sender),
             payable(address(0)),
             price,
-            false
+            false,
+            name,
+            symbol,
+            tokenURI
         );
 
         emit MarketItemCreated(
@@ -63,7 +77,10 @@ contract Marketplace is Ownable, ReentrancyGuard {
             msg.sender,
             address(0),
             price,
-            false
+            false,
+            name,
+            symbol,
+            tokenURI
         );
     }
 
