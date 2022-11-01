@@ -10,8 +10,10 @@ import FileUploader, {
 import { withAuth } from "../../src/components/WithAuth";
 import MinterToken from "../../contract/artifacts/contracts/MinterToken.sol/MinterToken.json";
 import { NFT_CONTRACT_ADDRESS } from "../../src/config/constants";
+import MinterLayout from "../../src/components/Layout";
+import { NextPageWithLayout } from "../../src/interfaces/interfaces";
 
-const Mint = () => {
+const Mint: NextPageWithLayout = () => {
   const { file } = useFileUploader();
   const { data } = useSession();
   const [isLoading, setIsLoading] = useState(false);
@@ -71,6 +73,10 @@ const Mint = () => {
       </VStack>
     </Container>
   );
+};
+
+Mint.getLayout = function getLayout(page) {
+  return <MinterLayout>{page}</MinterLayout>;
 };
 
 export default withAuth(Mint);

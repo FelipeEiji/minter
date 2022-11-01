@@ -1,18 +1,16 @@
 import { ShopOutlined } from "@ant-design/icons";
 import { Card, InputNumber, Modal } from "antd";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Nft } from "../../models/nft";
 import { useListNft } from "./useListNft";
 
-// <ShoppingCartOutlined />
-
 const { Meta } = Card;
 
-export type CardNftProps = {
+export type MyNftCardProps = {
   nft: Nft;
 };
 
-const MyNftCard: React.FC<CardNftProps> = ({ nft }) => {
+const MyNftCard: React.FC<MyNftCardProps> = ({ nft }) => {
   const {
     confirmLoading,
     setOpenSellModal,

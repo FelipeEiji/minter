@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { NextComponentType, NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 import { useMoralis } from 'react-moralis';
+import { NextComponentTypeWithGetLayout } from '../../interfaces/interfaces';
 
 const withAuthRedirect = (route: string) => <P,>(
-  Page: NextComponentType<NextPageContext, {}, P>
+  Page: NextComponentTypeWithGetLayout<P>
 ) => (props: any) => {
   const router = useRouter();
   const { isInitialized, isAuthenticated } = useMoralis();
+  const getLayout = Page.getLayout || ((page: any) => page)
 
   useEffect(() => {
     if (isInitialized && !isAuthenticated) {
@@ -17,9 +18,7 @@ const withAuthRedirect = (route: string) => <P,>(
   
   if (!isAuthenticated) return null;
 
-  return (
-    <Page {...props} />
-  )
+  return getLayout(<Page {...props} />)
 }
 
 export const withAuth = withAuthRedirect('/');

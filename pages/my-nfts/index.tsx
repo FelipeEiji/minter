@@ -1,21 +1,15 @@
-import { withAuth } from "../../src/components/WithAuth";
 import Moralis from "moralis";
 import { CHAIN_ID, TOKEN_ADDRESSES } from "../../src/config/constants";
-import NFTCard from "../../src/components/NFTCard";
-import { GetWalletNFTsResponse } from "../../src/interfaces/interfaces";
-import CreateMarketItemButton from "../../src/components/CreateMarketItemButton";
+import { GetWalletNFTsResponse, NextPageWithLayout } from "../../src/interfaces/interfaces";
 import nookies from "nookies";
 import { useMoralis } from "react-moralis";
-import { ReactElement, ReactNode, useEffect, useRef } from "react";
-import { NextPage } from "next";
-import MinterLayout from "../layout";
-import MyNftCard from "../../src/components/CardNft";
-import { Row, Col } from "antd";
+import { useEffect, useRef } from "react";
+import MinterLayout from "../../src/components/Layout";
+import MyNftCard from "../../src/components/Cards/MyNftCard";
+import { Row, Col, Empty } from "antd";
 import styles from './styles.module.css'
+import { withAuth } from "../../src/components/WithAuth";
 
-export type NextPageWithLayout<T = {}> = NextPage<T> & {
-  getLayout?: (page: ReactElement) => ReactNode;
-};
 
 type Props = {
   nfts: GetWalletNFTsResponse;
@@ -24,7 +18,7 @@ type Props = {
 const MyNFTs: NextPageWithLayout<Props> = ({ nfts }) => {
   const { account } = useMoralis();
   const currentAccountRef = useRef<string | null>(null);
-  
+
 
   useEffect(() => {
     if (
@@ -37,10 +31,14 @@ const MyNFTs: NextPageWithLayout<Props> = ({ nfts }) => {
     currentAccountRef.current = account;
   }, [account]);
 
+  if (!nfts.result.length) {
+    return <Empty description="You don't have any NFTs"/>
+  }
+
   return (
-    <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+    <Row gutter={[16, 16]}>
       {nfts.result.map((nft) => (
-        <Col xs={24} sm={12} md={8} xl={6} className={styles.col} >
+        <Col xs={24} sm={12} md={8} xl={6} className={styles.col} key={nft.token_id} >
           <MyNftCard nft={nft}/>
         </Col>
       ))}
@@ -82,5 +80,4 @@ export const getServerSideProps = async (context: any) => {
   };
 };
 
-// export default withAuth(MyNFTs);
-export default MyNFTs;
+export default withAuth(MyNFTs);

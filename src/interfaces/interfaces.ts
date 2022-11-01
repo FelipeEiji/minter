@@ -1,4 +1,6 @@
 import { EvmNftContractType } from "@moralisweb3/evm-utils";
+import { NextComponentType, NextPage, NextPageContext } from "next";
+import { ReactElement, ReactNode } from "react";
 
 export interface GetWalletNFTsResponse {
   total: number;
@@ -21,3 +23,9 @@ export interface GetWalletNFTsResponse {
     last_metadata_sync: string;
   }[];
 }
+
+export type NextPageWithLayout<T = {}> = NextPage<T> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+export type NextComponentTypeWithGetLayout<P> = NextComponentType<NextPageContext, {}, P> & { getLayout?: (page: ReactElement) => ReactNode; }

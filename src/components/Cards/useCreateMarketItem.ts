@@ -32,7 +32,7 @@ export const useCreateMarketItem = () => {
     functionName: "setApprovalForAll",
   });
 
-  const createMarketItem = async ({ tokenId, price }: CreateMarketItemRequest) => {
+  const createMarketItem = async ({ tokenId, price }: CreateMarketItemRequest) => {
     const isApproved = await isApprovedForAll({
       params: {
         params: {
