@@ -1,0 +1,29 @@
+.logo {
+  float: left;
+  width: 100px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  object-fit: contain;
+}
+
+.navContainer {
+  max-width: 1224px;
+  margin: 0 auto;
+}
+
+.nav {
+  justify-content: end;
+}
+
+.content {
+  max-width: 1224px;
+  width: 100%;
+  margin: 0 auto;
+  color: black;
+}
+
+.siteLayoutContent {
+  min-height: 280px;
+  padding: 24px;
+  background: #fff;
+}

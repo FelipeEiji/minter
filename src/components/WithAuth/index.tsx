@@ -3,7 +3,7 @@ import { NextComponentType, NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 import { useMoralis } from 'react-moralis';
 
-const withAuthRedirect = (route: string, redirectIfAuthed: boolean) => <P,>(
+const withAuthRedirect = (route: string) => <P,>(
   Page: NextComponentType<NextPageContext, {}, P>
 ) => (props: any) => {
   const router = useRouter();
@@ -22,4 +22,4 @@ const withAuthRedirect = (route: string, redirectIfAuthed: boolean) => <P,>(
   )
 }
 
-export const withAuth = withAuthRedirect('/', false);
+export const withAuth = withAuthRedirect('/');

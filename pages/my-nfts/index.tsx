@@ -4,55 +4,66 @@ import { CHAIN_ID, TOKEN_ADDRESSES } from "../../src/config/constants";
 import NFTCard from "../../src/components/NFTCard";
 import { GetWalletNFTsResponse } from "../../src/interfaces/interfaces";
 import CreateMarketItemButton from "../../src/components/CreateMarketItemButton";
-import nookies from 'nookies';
+import nookies from "nookies";
 import { useMoralis } from "react-moralis";
-import { useEffect, useRef } from "react";
+import { ReactElement, ReactNode, useEffect, useRef } from "react";
+import { NextPage } from "next";
+import MinterLayout from "../layout";
+import MyNftCard from "../../src/components/CardNft";
+import { Row, Col } from "antd";
+import styles from './styles.module.css'
 
-interface Props {
+export type NextPageWithLayout<T = {}> = NextPage<T> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type Props = {
   nfts: GetWalletNFTsResponse;
-}
+};
 
-const MyNFTs: React.FC<Props> = ({ nfts }) => {
+const MyNFTs: NextPageWithLayout<Props> = ({ nfts }) => {
   const { account } = useMoralis();
-  const currentAccountRef = useRef<string | null>(null)
+  const currentAccountRef = useRef<string | null>(null);
+  
 
   useEffect(() => {
-    if (currentAccountRef.current !== account && account !== null && currentAccountRef.current !== null) {
-      window.location.reload()
+    if (
+      currentAccountRef.current !== account &&
+      account !== null &&
+      currentAccountRef.current !== null
+    ) {
+      window.location.reload();
     }
-    currentAccountRef.current = account
-  }, [account])
+    currentAccountRef.current = account;
+  }, [account]);
 
   return (
-    <>
+    <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
       {nfts.result.map((nft) => (
-        <NFTCard
-          amount={Number(nft.amount)}
-          key={nft.token_id}
-          name={nft.name}
-          symbol={nft.symbol}
-          tokenURI={nft.token_uri}
-          tokenId={nft.token_id}
-        >
-          <CreateMarketItemButton tokenId={nft.token_id} />
-        </NFTCard>
+        <Col xs={24} sm={12} md={8} xl={6} className={styles.col} >
+          <MyNftCard nft={nft}/>
+        </Col>
       ))}
-    </>
+    </Row>
   );
+};
+
+MyNFTs.getLayout = function getLayout(page) {
+  return <MinterLayout>{page}</MinterLayout>;
 };
 
 export const getServerSideProps = async (context: any) => {
   await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
 
-  const account = nookies.get(context, 'account')
+  const account = nookies.get(context, "account");
 
-  console.log({ account })
+  console.log({ account });
 
   if (!account?.account) {
     return {
       props: {
         nfts: {
-          result: []
+          result: [],
         },
       },
     };
@@ -71,4 +82,5 @@ export const getServerSideProps = async (context: any) => {
   };
 };
 
-export default withAuth(MyNFTs);
+// export default withAuth(MyNFTs);
+export default MyNFTs;

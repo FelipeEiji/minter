@@ -1,4 +1,5 @@
-import "../styles/globals.css";
+// import "../styles/globals.css";
+import "antd/dist/antd.css"
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
@@ -51,7 +52,9 @@ const WithMoralis: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <>{children}</>;
 };
 
-const MyApp = ({ Component, pageProps }: AppProps<any>) => {
+const MyApp = ({ Component, pageProps }: any) => {
+  const getLayout = Component.getLayout || ((page: any) => page)
+
   return (
     <MoralisProvider
       appId={moralisConfig.appId}
@@ -61,7 +64,8 @@ const MyApp = ({ Component, pageProps }: AppProps<any>) => {
           <SessionProvider session={pageProps.session} refetchInterval={0}>
             <FileUploaderProvider>
               <WithMoralis>
-                <Component {...pageProps} />
+                {getLayout(<Component {...pageProps} />)}
+                
               </WithMoralis>
             </FileUploaderProvider>
           </SessionProvider>
