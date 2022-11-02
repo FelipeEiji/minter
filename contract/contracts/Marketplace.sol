@@ -23,6 +23,7 @@ contract Marketplace is Ownable, ReentrancyGuard {
         string name;
         string symbol;
         string tokenURI;
+        bool canceled;
     }
 
     mapping(uint256 => MarketItem) private idToMarketItem;
@@ -37,16 +38,19 @@ contract Marketplace is Ownable, ReentrancyGuard {
         bool sold,
         string name,
         string symbol,
-        string tokenURI
+        string tokenURI,
+        bool canceled
     );
 
     event MarketItemSold(uint256 indexed itemId, address owner);
+
+    event MarketItemCanceled(uint256 indexed itemId, address owner);
 
     function createMarketItem(
         address nftContract,
         uint256 tokenId,
         uint256 price
-    ) public payable nonReentrant {
+    ) public nonReentrant {
         require(price > 0, "Marketplace: Price must be greater than 0");
 
         IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
@@ -67,7 +71,8 @@ contract Marketplace is Ownable, ReentrancyGuard {
             false,
             name,
             symbol,
-            tokenURI
+            tokenURI,
+            false
         );
 
         emit MarketItemCreated(
@@ -80,7 +85,8 @@ contract Marketplace is Ownable, ReentrancyGuard {
             false,
             name,
             symbol,
-            tokenURI
+            tokenURI,
+            false
         );
     }
 
@@ -92,6 +98,10 @@ contract Marketplace is Ownable, ReentrancyGuard {
         uint256 price = idToMarketItem[itemId].price;
         uint256 tokenId = idToMarketItem[itemId].tokenId;
         bool sold = idToMarketItem[itemId].sold;
+        bool canceled = idToMarketItem[itemId].canceled;
+
+        require(canceled != true, "Marketplace: This Sale has been canceled");
+
         require(
             msg.value == price,
             "Marketplace: Please submit the asking price in order to complete the purchase"
@@ -105,5 +115,31 @@ contract Marketplace is Ownable, ReentrancyGuard {
         idToMarketItem[itemId].sold = true;
 
         emit MarketItemSold(itemId, msg.sender);
+    }
+
+    function cancelMarketSale(uint256 itemId) public nonReentrant {
+        bool sold = idToMarketItem[itemId].sold;
+        bool canceled = idToMarketItem[itemId].canceled;
+
+        require(sold != true, "Marketplace: This Sale has already finished");
+        require(
+            canceled != true,
+            "Marketplace: This Sale has been canceled already"
+        );
+        require(
+            msg.sender == idToMarketItem[itemId].seller,
+            "Marketplace: You are not the owner of this Sale"
+        );
+
+        idToMarketItem[itemId].canceled = true;
+        idToMarketItem[itemId].owner = idToMarketItem[itemId].seller;
+        uint256 tokenId = idToMarketItem[itemId].tokenId;
+        IERC721(idToMarketItem[itemId].nftContract).transferFrom(
+            address(this),
+            msg.sender,
+            tokenId
+        );
+
+        emit MarketItemCanceled(itemId, msg.sender);
     }
 }
