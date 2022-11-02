@@ -7,9 +7,8 @@ import { useEffect, useRef } from "react";
 import MinterLayout from "../../src/components/Layout";
 import MyNftCard from "../../src/components/Cards/MyNftCard";
 import { Row, Col, Empty } from "antd";
-import styles from './styles.module.css'
+import styles from "./styles.module.css";
 import { withAuth } from "../../src/components/WithAuth";
-
 
 type Props = {
   nfts: GetWalletNFTsResponse;
@@ -18,7 +17,6 @@ type Props = {
 const MyNFTs: NextPageWithLayout<Props> = ({ nfts }) => {
   const { account } = useMoralis();
   const currentAccountRef = useRef<string | null>(null);
-
 
   useEffect(() => {
     if (
@@ -32,14 +30,14 @@ const MyNFTs: NextPageWithLayout<Props> = ({ nfts }) => {
   }, [account]);
 
   if (!nfts.result.length) {
-    return <Empty description="You don't have any NFTs"/>
+    return <Empty description="You don't have any NFTs" />;
   }
 
   return (
     <Row gutter={[16, 16]}>
       {nfts.result.map((nft) => (
-        <Col xs={24} sm={12} md={8} xl={6} className={styles.col} key={nft.token_id} >
-          <MyNftCard nft={nft}/>
+        <Col xs={24} sm={12} md={8} xl={6} className={styles.col} key={nft.token_id}>
+          <MyNftCard nft={nft} />
         </Col>
       ))}
     </Row>

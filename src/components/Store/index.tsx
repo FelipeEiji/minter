@@ -1,7 +1,8 @@
-import { MarketItemsResponse } from "./interface";
-import StoreCard from "../Cards/StoreNftCard";
-import { Nft } from "../../models/nft";
+import { Col, Row } from "antd";
 import { MarketItem } from "../../models/marketItem";
+import StoreCard from "../Cards/StoreNftCard";
+import { MarketItemsResponse } from "./interface";
+import styles from "./styles.module.css";
 
 const toMarketItem = (response: MarketItemsResponse): MarketItem[] =>
   response.data.map((item) => ({
@@ -10,13 +11,18 @@ const toMarketItem = (response: MarketItemsResponse): MarketItem[] =>
     token_id: item.get("tokenId"),
     token_uri: item.get("tokenURI"),
     itemId: item.get("itemId"),
-    price: item.get("price")
+    price: item.get("price"),
+    seller: item.get("seller"),
   }));
 
 const Store: React.FC<MarketItemsResponse> = (response) => (
-  <>
-    {toMarketItem(response).map(marketItem => <StoreCard key={marketItem.itemId} marketItem={marketItem} />)}
-  </>
+  <Row gutter={[16, 16]}>
+    {toMarketItem(response).map((marketItem) => (
+      <Col xs={24} sm={12} md={8} xl={6} className={styles.col} key={marketItem.token_id}>
+        <StoreCard key={marketItem.itemId} marketItem={marketItem} />
+      </Col>
+    ))}
+  </Row>
 );
 
 export default Store;

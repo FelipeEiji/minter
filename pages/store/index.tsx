@@ -9,7 +9,7 @@ const StorePage: NextPageWithLayout = () => {
   const { account, data } = useMarketItems();
 
   if (!data.length) {
-    return <Empty description="There's no item at the moment"/>
+    return <Empty description="There's no item at the moment" />;
   }
 
   return <Store account={account} data={data} />;
@@ -18,6 +18,5 @@ const StorePage: NextPageWithLayout = () => {
 StorePage.getLayout = function getLayout(page) {
   return <MinterLayout>{page}</MinterLayout>;
 };
-
 
 export default withAuth(StorePage);

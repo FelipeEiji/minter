@@ -1,20 +1,15 @@
-import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import React from "react";
 import { MarketItem } from "../../models/marketItem";
-import Loader from "../Loader";
-import { useCreateMarketSale } from "./useCreateMarketSale";
-
+import CardAction from "./CardAction";
 
 const { Meta } = Card;
 
 export type StoreCardProps = {
-  marketItem: MarketItem
-}
+  marketItem: MarketItem;
+};
 
 const StoreCard: React.FC<StoreCardProps> = ({ marketItem }) => {
-  const { createMarketSale, isLoading } = useCreateMarketSale()
-
   return (
     <>
       <Card
@@ -26,9 +21,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ marketItem }) => {
             style={{ height: 300, objectFit: "cover" }}
           />
         }
-        actions={[
-          isLoading ? <Loader /> : <ShoppingCartOutlined key="sell" onClick={() => createMarketSale({ itemId: marketItem.itemId, price: marketItem.price })}/>,
-        ]}
+        actions={[<CardAction marketItem={marketItem} />]}
       >
         <Meta title={`${marketItem.name}#${marketItem.token_id}`} description={marketItem.symbol} />
       </Card>
