@@ -6,6 +6,7 @@ import {
 } from "../../config/constants";
 import MinterToken from "../../../contract/artifacts/contracts/MinterToken.sol/MinterToken.json";
 import Marketplace from "../../../contract/artifacts/contracts/Marketplace.sol/Marketplace.json";
+import React from "react";
 
 interface ButtonProps {
   tokenId: string;
@@ -16,7 +17,6 @@ const CreateMarketItemButton: React.FC<ButtonProps> = ({ tokenId }) => {
 
   const {
     fetch: createMarketItem,
-    isFetching,
     isLoading,
   } = useWeb3ExecuteFunction({
     contractAddress: MARKETPLACE_CONTRACT_ADDRESS,
@@ -26,8 +26,6 @@ const CreateMarketItemButton: React.FC<ButtonProps> = ({ tokenId }) => {
 
   const {
     fetch: isApprovedForAll,
-    isFetching: isApprovalForAllFetching,
-    isLoading: isApprovalForAllIsLoading,
   } = useWeb3ExecuteFunction({
     contractAddress: NFT_CONTRACT_ADDRESS,
     abi: MinterToken.abi,
@@ -36,8 +34,6 @@ const CreateMarketItemButton: React.FC<ButtonProps> = ({ tokenId }) => {
 
   const {
     fetch: setApprovalForAll,
-    isFetching: setApprovalForAllFetching,
-    isLoading: setApprovalForAllIsLoading,
   } = useWeb3ExecuteFunction({
     contractAddress: NFT_CONTRACT_ADDRESS,
     abi: MinterToken.abi,

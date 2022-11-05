@@ -13,7 +13,9 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isAuthenticated) router.push("/store");
+    if (isAuthenticated) {
+      router.push("/store");
+    }
   }, [isAuthenticated]);
 
   return (
@@ -26,7 +28,11 @@ const Home: NextPage = () => {
       <main>
         <Flex alignItems="center" justifyContent="center" minHeight="100vh">
           <VStack>
-            <ReactSVG className="logo" src={"/logo.svg"} style={{ padding: 0 }} />
+            <ReactSVG
+              className="logo"
+              src={"/logo.svg"}
+              style={{ padding: 0 }}
+            />
             <Spacer />
             <ConnectButton />
           </VStack>

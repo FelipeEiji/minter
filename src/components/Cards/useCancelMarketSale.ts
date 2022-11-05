@@ -7,7 +7,6 @@ export type CancelRequest = { itemId: number };
 export const useCancelMarketSale = () => {
   const {
     fetch: _cancelMarketSale,
-    isFetching,
     isLoading,
   } = useWeb3ExecuteFunction({
     contractAddress: MARKETPLACE_CONTRACT_ADDRESS,
@@ -20,7 +19,7 @@ export const useCancelMarketSale = () => {
       const result = await _cancelMarketSale({
         params: {
           params: {
-            itemId: itemId,
+            itemId,
           },
         },
       });

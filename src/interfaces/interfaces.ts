@@ -24,8 +24,8 @@ export interface GetWalletNFTsResponse {
   }[];
 }
 
-export type NextPageWithLayout<T = {}> = NextPage<T> & {
+export type NextPageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-export type NextComponentTypeWithGetLayout<P> = NextComponentType<NextPageContext, {}, P> & { getLayout?: (page: ReactElement) => ReactNode; }
+export type NextComponentTypeWithGetLayout<P> = NextComponentType<NextPageContext, Record<string, unknown>, P> & { getLayout?: (page: ReactElement) => ReactNode; }

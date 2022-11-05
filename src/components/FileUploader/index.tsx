@@ -2,7 +2,6 @@ import {
   AspectRatio,
   Box,
   BoxProps,
-  Container,
   forwardRef,
   Heading,
   Input,
@@ -10,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 
 const first = {
   rest: {

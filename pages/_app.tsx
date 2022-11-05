@@ -1,13 +1,12 @@
-// import "../styles/globals.css";
-import "antd/dist/antd.css"
+import "antd/dist/antd.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
-import type { AppProps } from "next/app";
 import { FileUploaderProvider } from "../src/components/FileUploader";
 import { useMoralis, MoralisProvider } from "react-moralis";
 import React, { useEffect } from "react";
-import nookies from 'nookies';
+import nookies from "nookies";
+import ErrorBoundary from "../src/components/ErrorBoundary";
 
 const config = {
   initialColorMode: "dark",
@@ -28,7 +27,7 @@ const WithMoralis: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     enableWeb3,
     isAuthenticated,
     isWeb3EnableLoading,
-    account
+    account,
   } = useMoralis();
 
   useEffect(() => {
@@ -38,38 +37,39 @@ const WithMoralis: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       !isWeb3Enabled &&
       !isWeb3EnableLoading
     )
-      enableWeb3();
+      {enableWeb3();}
   }, [isAuthenticated, isWeb3Enabled]);
 
   useEffect(() => {
     if (account) {
-      nookies.set(null, 'account', account)
+      nookies.set(null, "account", account);
     } else {
-      nookies.destroy(null, 'account')
+      nookies.destroy(null, "account");
     }
-  }, [account])
+  }, [account]);
 
   return <>{children}</>;
 };
 
 const MyApp = ({ Component, pageProps }: any) => {
-  const getLayout = Component.getLayout || ((page: any) => page)
+  const getLayout = Component.getLayout || ((page: any) => page);
 
   return (
     <MoralisProvider
       appId={moralisConfig.appId}
       serverUrl={moralisConfig.serverUrl}
     >
-        <ChakraProvider resetCSS theme={theme}>
-          <SessionProvider session={pageProps.session} refetchInterval={0}>
-            <FileUploaderProvider>
-              <WithMoralis>
+      <ChakraProvider resetCSS theme={theme}>
+        <SessionProvider session={pageProps.session} refetchInterval={0}>
+          <FileUploaderProvider>
+            <WithMoralis>
+              <ErrorBoundary>
                 {getLayout(<Component {...pageProps} />)}
-                
-              </WithMoralis>
-            </FileUploaderProvider>
-          </SessionProvider>
-        </ChakraProvider>
+              </ErrorBoundary>
+            </WithMoralis>
+          </FileUploaderProvider>
+        </SessionProvider>
+      </ChakraProvider>
     </MoralisProvider>
   );
 };

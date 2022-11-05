@@ -10,7 +10,6 @@ export type BuyRequest = { itemId: number, price: number }
 export const useCreateMarketSale = () => {
   const {
     fetch: _createMarketSale,
-    isFetching,
     isLoading,
   } = useWeb3ExecuteFunction({
     contractAddress: MARKETPLACE_CONTRACT_ADDRESS,
@@ -24,7 +23,7 @@ export const useCreateMarketSale = () => {
         params: {
           params: {
             nftContract: NFT_CONTRACT_ADDRESS,
-            itemId: itemId,
+            itemId,
           },
           msgValue: Number(price),
         },

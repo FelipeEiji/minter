@@ -17,9 +17,9 @@ const CardAction: React.FC<CardActionProps> = ({ marketItem }) => {
   const { account } = useMoralis();
   const router = useRouter();
 
-  if (isLoadingCreateRequest || isLoadingCancelRequest) return <Loader />;
+  if (isLoadingCreateRequest || isLoadingCancelRequest) {return <Loader />;}
   if (account === marketItem.seller)
-    return (
+    {return (
       <CloseOutlined
         key="cancel"
         onClick={() =>
@@ -28,7 +28,7 @@ const CardAction: React.FC<CardActionProps> = ({ marketItem }) => {
           }).then(() => router.push("/my-nfts"))
         }
       />
-    );
+    );}
 
   return (
     <ShoppingCartOutlined

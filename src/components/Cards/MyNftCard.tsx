@@ -44,7 +44,7 @@ const MyNftCard: React.FC<MyNftCardProps> = ({ nft }) => {
           defaultValue={price.current}
           step="0.001"
           stringMode
-          onChange={(value) => (price.current = String(value))}
+          onChange={(value) => { price.current = String(value) }}
         />
       </Modal>
     </>

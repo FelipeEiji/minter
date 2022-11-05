@@ -30,7 +30,7 @@ const MinterLayout: React.FC<LayoutProps> = ({ children }) => {
             className={styles.nav}
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={[router.pathname]}
+            // defaultSelectedKeys={[router.pathname]}
             items={items}
           />
         </div>

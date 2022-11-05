@@ -1,4 +1,4 @@
-import { signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useMoralis } from 'react-moralis';
 import { Button, Text, HStack, Avatar, useToast } from "@chakra-ui/react";
 import { getEllipsisTxt } from "../../utils/format";
