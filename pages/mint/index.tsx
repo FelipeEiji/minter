@@ -9,7 +9,7 @@ import FileUploader, {
   useFileUploader,
 } from "../../src/components/FileUploader";
 import { withAuth } from "../../src/components/WithAuth";
-import MinterToken from "../../contract/artifacts/contracts/MinterToken.sol/MinterToken.json";
+import MinterToken from "../../contracts/artifacts/contracts/MinterToken.sol/MinterToken.json";
 import { NFT_CONTRACT_ADDRESS } from "../../src/config/constants";
 import MinterLayout from "../../src/components/Layout";
 import { NextPageWithLayout } from "../../src/interfaces/interfaces";

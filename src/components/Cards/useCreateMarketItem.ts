@@ -1,6 +1,6 @@
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
-import MinterToken from "../../../contract/artifacts/contracts/MinterToken.sol/MinterToken.json";
-import Marketplace from "../../../contract/artifacts/contracts/Marketplace.sol/Marketplace.json";
+import MinterToken from "../../../contracts/artifacts/contracts/MinterToken.sol/MinterToken.json";
+import Marketplace from "../../../contracts/artifacts/contracts/Marketplace.sol/Marketplace.json";
 import {
   MARKETPLACE_CONTRACT_ADDRESS,
   NFT_CONTRACT_ADDRESS,
