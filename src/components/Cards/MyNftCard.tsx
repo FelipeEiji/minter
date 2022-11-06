@@ -3,7 +3,7 @@ import { Card, InputNumber, Modal, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { NFT_CONTRACT_ADDRESS } from "../../config/constants";
-import { Nft } from "../../models/nft";
+import { Nft } from "../../interfaces/nft";
 import { NftTransactionsInfoButton } from "../NftTransactionsButton";
 import { useListNft } from "./useListNft";
 

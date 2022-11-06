@@ -2,7 +2,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Card, Tooltip } from "antd";
 import React from "react";
 import { useMoralis } from "react-moralis";
-import { MarketItem } from "../../models/marketItem";
+import { MarketItem } from "../../interfaces/marketItem";
 import { NftTransactionsInfoButton } from "../NftTransactionsButton";
 import CardAction from "./CardAction";
 

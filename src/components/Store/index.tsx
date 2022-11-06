@@ -4,7 +4,7 @@ import {
   Row,
 } from "antd";
 import React from "react";
-import { MarketItem } from "../../models/marketItem";
+import { MarketItem } from "../../interfaces/marketItem";
 import StoreCard from "../Cards/StoreNftCard";
 import { MarketItemsResponse } from "./interface";
 import PriceFilter from "./PriceFilter";

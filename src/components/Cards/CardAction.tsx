@@ -3,7 +3,7 @@ import { Tooltip } from "antd";
 import { useRouter } from "next/router";
 import React from "react";
 import { useMoralis } from "react-moralis";
-import { MarketItem } from "../../models/marketItem";
+import { MarketItem } from "../../interfaces/marketItem";
 import Loader from "../Loader";
 import { useCancelMarketSale } from "./useCancelMarketSale";
 import { useCreateMarketSale } from "./useCreateMarketSale";
