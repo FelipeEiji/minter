@@ -1,12 +1,10 @@
-import { Container, Heading, VStack } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import {
   useMoralis,
   useMoralisFile,
   useWeb3ExecuteFunction,
 } from "react-moralis";
 import { useState } from "react";
-import { Spinner } from "@chakra-ui/react";
 import FileUploader, {
   useFileUploader,
 } from "../../src/components/FileUploader";
@@ -16,6 +14,9 @@ import { NFT_CONTRACT_ADDRESS } from "../../src/config/constants";
 import MinterLayout from "../../src/components/Layout";
 import { NextPageWithLayout } from "../../src/interfaces/interfaces";
 import { useRouter } from "next/router";
+import { Button, Typography } from "antd";
+
+const { Title } = Typography;
 
 const Mint: NextPageWithLayout = () => {
   const { file } = useFileUploader();
@@ -43,7 +44,7 @@ const Mint: NextPageWithLayout = () => {
           throw new Error("Error while uploading to IPFS");
         }
 
-        await safeMint({
+        const result = await safeMint({
           params: {
             params: {
               to: account,
@@ -52,7 +53,10 @@ const Mint: NextPageWithLayout = () => {
           },
         });
 
-        router.push("/my-nfts");
+        if (result) {
+          router.push("/my-nfts");
+        }
+
       }
     } finally {
       setIsLoading(false);
@@ -60,19 +64,18 @@ const Mint: NextPageWithLayout = () => {
   };
 
   return (
-    <Container maxW="md">
-      <VStack>
-        <Heading>Create a new item</Heading>
-        <FileUploader />
-        <Button
-          colorScheme="blue"
-          disabled={!file || isLoading}
-          onClick={onClickCreate}
-        >
-          Create {isLoading && <Spinner />}
-        </Button>
-      </VStack>
-    </Container>
+    <VStack height={494} justifyContent='center'>
+      <Title>Create a new item</Title>
+      <FileUploader />
+      <Button
+        type="primary"
+        disabled={!file || isLoading}
+        onClick={onClickCreate}
+        loading={isLoading}
+      >
+        Create
+      </Button>
+    </VStack>
   );
 };
 

@@ -42,8 +42,8 @@ const MinterLayout: React.FC<LayoutProps> = ({ children }) => {
       </Header>
       <Content className={styles.content}  style={{ marginTop: 16 }}>
         {children}
-        <Divider />
       </Content>
+      <Divider />
       <Footer style={{ textAlign: 'center' }}>Minter 2022</Footer>
     </AntdLayout>
   )

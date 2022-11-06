@@ -25,6 +25,7 @@
 .content {
   max-width: 1224px;
   width: 100%;
+  min-height: 494px;
   margin: 0 auto;
   color: black;
 }
