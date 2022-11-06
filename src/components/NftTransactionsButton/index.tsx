@@ -1,4 +1,5 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 import React from "react";
 
 export type NftTransactionsProps = {
@@ -17,12 +18,14 @@ export const NftTransactionsInfoButton: React.FC<NftTransactionsProps> = ({
   tokenId,
   nftContract,
 }) => (
-  <InfoCircleOutlined
-    onClick={() =>
-      goToNftTransactions({
-        nftContract,
-        tokenId,
-      })
-    }
-  />
+  <Tooltip placement="top" title="Transactions">
+    <InfoCircleOutlined
+      onClick={() =>
+        goToNftTransactions({
+          nftContract,
+          tokenId,
+        })
+      }
+    />
+  </Tooltip>
 );

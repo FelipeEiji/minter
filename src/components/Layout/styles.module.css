@@ -1,18 +1,25 @@
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1224px;
+  margin: 0 auto;
+}
+
 .logo {
-  float: left;
   width: 100px;
   height: 31px;
   margin: 16px 24px 16px 0;
   object-fit: contain;
 }
 
-.navContainer {
-  max-width: 1224px;
-  margin: 0 auto;
+.nav {
+  width: 100%;
+  justify-content: center;
 }
 
-.nav {
-  justify-content: end;
+.account {
+  color: white;
 }
 
 .content {
@@ -27,3 +34,4 @@
   padding: 24px;
   background: #fff;
 }
+

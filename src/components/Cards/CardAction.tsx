@@ -1,4 +1,5 @@
 import { CloseOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 import { useRouter } from "next/router";
 import React from "react";
 import { useMoralis } from "react-moralis";
@@ -31,8 +32,9 @@ const CardAction: React.FC<CardActionProps> = ({ marketItem }) => {
     );}
 
   return (
+    <Tooltip placement="top" title={"Buy"}>
     <ShoppingCartOutlined
-      key="sell"
+      key="buy"
       onClick={() => {
         createMarketSale({
           itemId: marketItem.itemId,
@@ -40,6 +42,7 @@ const CardAction: React.FC<CardActionProps> = ({ marketItem }) => {
         }).then(() => router.push("/my-nfts"));
       }}
     />
+    </Tooltip>
   );
 };
 

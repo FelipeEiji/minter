@@ -5,9 +5,8 @@ import {
   useMoralisFile,
   useWeb3ExecuteFunction,
 } from "react-moralis";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Spinner } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
 import FileUploader, {
   useFileUploader,
 } from "../../src/components/FileUploader";
@@ -20,11 +19,8 @@ import { useRouter } from "next/router";
 
 const Mint: NextPageWithLayout = () => {
   const { file } = useFileUploader();
-  const { data } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => console.log(data), [data]);
 
   const { account } = useMoralis();
   const { saveFile } = useMoralisFile();
