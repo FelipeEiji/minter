@@ -39,6 +39,7 @@ const PriceFilter = () => {
         stringMode
       />
       <InputNumber
+        ref={inputMax}
         style={{ width: 150, marginLeft: 10 }}
         addonAfter={<div>Matic</div>}
         defaultValue={filter.max}
