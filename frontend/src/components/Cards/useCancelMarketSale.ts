@@ -1,5 +1,5 @@
 import { useWeb3ExecuteFunction } from "react-moralis";
-import Marketplace from "../../../contracts/artifacts/contracts/Marketplace.sol/Marketplace.json";
+import Marketplace from "../../../../contracts/artifacts/contracts/Marketplace.sol/Marketplace.json";
 import { MARKETPLACE_CONTRACT_ADDRESS } from "../../config/constants";
 
 export type CancelRequest = { itemId: number };
