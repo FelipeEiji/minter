@@ -52,9 +52,7 @@ export const getServerSideProps = async (context: any) => {
   await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
 
   const account = nookies.get(context, "account");
-
-  console.log({ account });
-
+  
   if (!account?.account) {
     return {
       props: {

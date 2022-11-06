@@ -19,6 +19,7 @@ const toMarketItem = (response: MarketItemsResponse): MarketItem[] =>
     itemId: item.get("itemId"),
     price: item.get("price"),
     seller: item.get("seller"),
+    nftContract: item.get("nftContract")
   }));
 
 const Store: React.FC<MarketItemsResponse> = (response) => (

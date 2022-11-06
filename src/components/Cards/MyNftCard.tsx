@@ -2,7 +2,9 @@ import { ShopOutlined } from "@ant-design/icons";
 import { Card, InputNumber, Modal } from "antd";
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
+import { NFT_CONTRACT_ADDRESS } from "../../config/constants";
 import { Nft } from "../../models/nft";
+import { NftTransactionsInfoButton } from "../NftTransactionsButton";
 import { useListNft } from "./useListNft";
 
 const { Meta } = Card;
@@ -24,7 +26,7 @@ const MyNftCard: React.FC<MyNftCardProps> = ({ nft }) => {
         cover={
           <img alt="token_uri" src={nft.token_uri} style={{ height: 300, objectFit: "cover" }} />
         }
-        actions={[<ShopOutlined key="sell" onClick={() => setOpenSellModal(true)} />]}
+        actions={[<NftTransactionsInfoButton nftContract={NFT_CONTRACT_ADDRESS} tokenId={nft.token_id} />, <ShopOutlined key="sell" onClick={() => setOpenSellModal(true)} />]}
       >
         <Meta title={`${nft.name}#${nft.token_id}`} description={nft.symbol} />
       </Card>
