@@ -1,4 +1,4 @@
-import { Layout as AntdLayout, Menu } from 'antd';
+import { Divider, Layout as AntdLayout, Menu } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import styles from './styles.module.css'
@@ -30,7 +30,7 @@ const MinterLayout: React.FC<LayoutProps> = ({ children }) => {
             className={styles.nav}
             theme="dark"
             mode="horizontal"
-            // defaultSelectedKeys={[router.pathname]}
+            defaultSelectedKeys={[router.pathname]}
             items={items}
           />
         </div>
@@ -38,6 +38,7 @@ const MinterLayout: React.FC<LayoutProps> = ({ children }) => {
       </Header>
       <Content className={styles.content}  style={{ marginTop: 16 }}>
         {children}
+        <Divider />
       </Content>
       <Footer style={{ textAlign: 'center' }}>Minter 2022</Footer>
     </AntdLayout>

@@ -1,5 +1,6 @@
 import { Card } from "antd";
 import React from "react";
+import { useMoralis } from "react-moralis";
 import { MarketItem } from "../../models/marketItem";
 import CardAction from "./CardAction";
 
@@ -10,6 +11,8 @@ export type StoreCardProps = {
 };
 
 const StoreCard: React.FC<StoreCardProps> = ({ marketItem }) => {
+  const { Moralis } = useMoralis();
+
   return (
     <>
       <Card
@@ -23,7 +26,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ marketItem }) => {
         }
         actions={[<CardAction marketItem={marketItem} />]}
       >
-        <Meta title={`${marketItem.name}#${marketItem.token_id}`} description={marketItem.symbol} />
+        <Meta title={`${marketItem.name}#${marketItem.token_id}`} description={`${marketItem.symbol} - ${Moralis.Units.FromWei(marketItem.price)} Matic`} />
       </Card>
     </>
   );

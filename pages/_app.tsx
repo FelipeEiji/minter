@@ -4,9 +4,9 @@ import { extendTheme } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 import { FileUploaderProvider } from "../src/components/FileUploader";
 import { useMoralis, MoralisProvider } from "react-moralis";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import nookies from "nookies";
-import ErrorBoundary from "../src/components/ErrorBoundary";
+import { PriceFilter, PriceFilterContext } from "../src/contexts/PriceFilterContext";
 
 const config = {
   initialColorMode: "dark",
@@ -36,8 +36,9 @@ const WithMoralis: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       isAuthenticated &&
       !isWeb3Enabled &&
       !isWeb3EnableLoading
-    )
-      {enableWeb3();}
+    ) {
+      enableWeb3();
+    }
   }, [isAuthenticated, isWeb3Enabled]);
 
   useEffect(() => {
@@ -54,6 +55,8 @@ const WithMoralis: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const MyApp = ({ Component, pageProps }: any) => {
   const getLayout = Component.getLayout || ((page: any) => page);
 
+  const [filter, setFilter] = useState<PriceFilter>({ order: 'asc' })
+
   return (
     <MoralisProvider
       appId={moralisConfig.appId}
@@ -62,11 +65,11 @@ const MyApp = ({ Component, pageProps }: any) => {
       <ChakraProvider resetCSS theme={theme}>
         <SessionProvider session={pageProps.session} refetchInterval={0}>
           <FileUploaderProvider>
+            <PriceFilterContext.Provider value={{ filter, setFilter }}>
             <WithMoralis>
-              <ErrorBoundary>
-                {getLayout(<Component {...pageProps} />)}
-              </ErrorBoundary>
+              {getLayout(<Component {...pageProps} />)}
             </WithMoralis>
+            </PriceFilterContext.Provider>
           </FileUploaderProvider>
         </SessionProvider>
       </ChakraProvider>
