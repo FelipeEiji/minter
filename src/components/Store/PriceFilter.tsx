@@ -2,7 +2,7 @@ import { Button, InputNumber, Select, Typography } from "antd";
 import { useRef, useState } from "react";
 import { Order, usePriceFilter } from "../../contexts/PriceFilterContext";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const PriceFilter = () => {
   const { filter, setFilter } = usePriceFilter();

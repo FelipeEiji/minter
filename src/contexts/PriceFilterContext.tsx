@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 export type Order = "asc" | "desc";
 
@@ -14,5 +14,16 @@ export type PriceFilterContextType = {
 }
 
 export const PriceFilterContext = createContext<PriceFilterContextType>({ filter: { order: 'asc' }, setFilter: () => null })
+
+export const PriceFilterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [filter, setFilter] = useState<PriceFilter>({ order: 'asc' })
+
+    return (
+        <PriceFilterContext.Provider value={{ filter, setFilter }}>
+            {children}
+        </PriceFilterContext.Provider>
+    )
+}
+
 
 export const usePriceFilter = () => useContext(PriceFilterContext)
