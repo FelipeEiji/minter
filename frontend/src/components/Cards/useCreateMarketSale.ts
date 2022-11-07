@@ -3,7 +3,7 @@ import {
   MARKETPLACE_CONTRACT_ADDRESS,
   NFT_CONTRACT_ADDRESS,
 } from "../../config/constants";
-import Marketplace from "../../../../contracts/artifacts/contracts/Marketplace.sol/Marketplace.json";
+import Marketplace from "../../../src/abis/MarketPlace.json";
 
 export type BuyRequest = { itemId: number, price: number }
 
