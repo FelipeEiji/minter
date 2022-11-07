@@ -28,8 +28,14 @@ const config: HardhatUserConfig = {
   networks: {
     mumbai: {
       url: process.env.MUMBAI_RPC,
-      accounts: [process.env.PRIVATE_KEY || ''],
+      accounts: [process.env.PRIVATE_KEY || ""],
     },
+  },
+  gasReporter: {
+    currency: "BRL",
+    gasPrice: 300,
+    coinmarketcap: "1070e4f1-6c16-4c01-b306-42df56a26ff9",
+    token: "MATIC",
   },
 };
 

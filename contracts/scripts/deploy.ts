@@ -33,7 +33,7 @@ async function main() {
 
   // console.log("MinterToken deployed to:", MTK.address);
 
-  const Marketplace = await ethers.getContractFactory("Marketplace");
+  const Marketplace = await ethers.getContractFactory("MinterToken");
   const marketplace = await Marketplace.deploy();
 
   await marketplace.deployed();
