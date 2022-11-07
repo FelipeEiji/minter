@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Minter Marketplace created for Alexandre Estevam and Felipe Maruyama thesis."
+authors:
+  - family-names: Estevam
+    given-names: Alexandre
+  - family-names: Maruyama
+    given-names: Felipe
+title: "Minter"
+version: 1.0.0
+date-released: 2022-11-07
