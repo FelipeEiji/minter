@@ -30,6 +30,10 @@ const config: HardhatUserConfig = {
       url: process.env.MUMBAI_RPC,
       accounts: [process.env.PRIVATE_KEY || ""],
     },
+    matic: {
+      url: "https://rpc-mainnet.maticvigil.com",
+      accounts: [process.env.PRIVATE_KEY || ""],
+    },
   },
   gasReporter: {
     currency: "BRL",

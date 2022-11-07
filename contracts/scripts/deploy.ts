@@ -26,19 +26,19 @@ async function main() {
 
   // console.log("MinterToken deployed to:", MTK.address);
 
-  // const MinterToken = await ethers.getContractFactory("MinterToken");
-  // const MTK = await MinterToken.deploy();
+  const MinterToken = await ethers.getContractFactory("MinterToken");
+  const MTK = await MinterToken.deploy({ gasPrice: 100000000000 });
 
-  // await MTK.deployed();
+  await MTK.deployed();
 
-  // console.log("MinterToken deployed to:", MTK.address);
+  console.log("MinterToken deployed to:", MTK.address);
 
-  const Marketplace = await ethers.getContractFactory("Marketplace");
-  const marketplace = await Marketplace.deploy();
+  // const Marketplace = await ethers.getContractFactory("Marketplace");
+  // const marketplace = await Marketplace.deploy({ gasPrice: 100000000000 });
 
-  await marketplace.deployed();
+  // await marketplace.deployed();
 
-  console.log("Marketplace deployed to:", marketplace.address);
+  // console.log("Marketplace deployed to:", marketplace.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
