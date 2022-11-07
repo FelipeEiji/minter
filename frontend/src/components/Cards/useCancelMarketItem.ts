@@ -1,22 +1,22 @@
 import { useWeb3ExecuteFunction } from "react-moralis";
-import Marketplace from "../../../src/abis/MarketPlace.json";
+import Marketplace from "../../abis/MarketPlace.json";
 import { MARKETPLACE_CONTRACT_ADDRESS } from "../../config/constants";
 
 export type CancelRequest = { itemId: number };
 
-export const useCancelMarketSale = () => {
+export const useCancelMarketItem = () => {
   const {
-    fetch: _cancelMarketSale,
+    fetch: _cancelMarketItem,
     isLoading,
   } = useWeb3ExecuteFunction({
     contractAddress: MARKETPLACE_CONTRACT_ADDRESS,
     abi: Marketplace.abi,
-    functionName: "cancelMarketSale",
+    functionName: "cancelMarketItem",
   });
 
-  const cancelMarketSale = async ({ itemId }: CancelRequest) => {
+  const cancelMarketItem = async ({ itemId }: CancelRequest) => {
     try {
-      const result = await _cancelMarketSale({
+      const result = await _cancelMarketItem({
         params: {
           params: {
             itemId,
@@ -30,5 +30,5 @@ export const useCancelMarketSale = () => {
     }
   };
 
-  return { isLoading, cancelMarketSale };
+  return { isLoading, cancelMarketItem };
 };

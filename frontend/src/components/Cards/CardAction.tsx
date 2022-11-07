@@ -5,16 +5,16 @@ import React from "react";
 import { useMoralis } from "react-moralis";
 import { MarketItem } from "../../interfaces/marketItem";
 import Loader from "../Loader";
-import { useCancelMarketSale } from "./useCancelMarketSale";
-import { useCreateMarketSale } from "./useCreateMarketSale";
+import { useCancelMarketItem } from "./useCancelMarketItem";
+import { useBuyMarketItem } from "./useBuyMarketItem";
 
 export type CardActionProps = {
   marketItem: MarketItem;
 };
 
 const CardAction: React.FC<CardActionProps> = ({ marketItem }) => {
-  const { createMarketSale, isLoading: isLoadingCreateRequest } = useCreateMarketSale();
-  const { cancelMarketSale, isLoading: isLoadingCancelRequest } = useCancelMarketSale();
+  const { buyMarketItem, isLoading: isLoadingCreateRequest } = useBuyMarketItem();
+  const { cancelMarketItem, isLoading: isLoadingCancelRequest } = useCancelMarketItem();
   const { account } = useMoralis();
   const router = useRouter();
 
@@ -24,7 +24,7 @@ const CardAction: React.FC<CardActionProps> = ({ marketItem }) => {
       <CloseOutlined
         key="cancel"
         onClick={() =>
-          cancelMarketSale({
+          cancelMarketItem({
             itemId: marketItem.itemId,
           }).then(() => router.push("/my-nfts"))
         }
@@ -36,7 +36,7 @@ const CardAction: React.FC<CardActionProps> = ({ marketItem }) => {
     <ShoppingCartOutlined
       key="buy"
       onClick={() => {
-        createMarketSale({
+        buyMarketItem({
           itemId: marketItem.itemId,
           price: marketItem.price,
         }).then(() => router.push("/my-nfts"));

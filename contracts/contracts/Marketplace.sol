@@ -89,7 +89,7 @@ contract Marketplace is ReentrancyGuard {
         );
     }
 
-    function createMarketSale(address nftContract, uint256 itemId)
+    function buyMarketItem(uint256 itemId)
         public
         payable
         nonReentrant
@@ -99,16 +99,16 @@ contract Marketplace is ReentrancyGuard {
         bool sold = idToMarketItem[itemId].sold;
         bool canceled = idToMarketItem[itemId].canceled;
 
-        require(canceled != true, "Marketplace: This Sale has been canceled");
+        require(canceled != true, "Marketplace: This item has been canceled");
 
         require(
             msg.value == price,
             "Marketplace: Please submit the asking price in order to complete the purchase"
         );
-        require(sold != true, "Marketplace: This Sale has already finished");
+        require(sold != true, "Marketplace: This item was already sold");
 
         idToMarketItem[itemId].seller.transfer(msg.value);
-        IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
+        IERC721(idToMarketItem[itemId].nftContract).transferFrom(address(this), msg.sender, tokenId);
         idToMarketItem[itemId].owner = payable(msg.sender);
         _itemsSold.increment();
         idToMarketItem[itemId].sold = true;
@@ -116,18 +116,18 @@ contract Marketplace is ReentrancyGuard {
         emit MarketItemSold(itemId, msg.sender);
     }
 
-    function cancelMarketSale(uint256 itemId) public nonReentrant {
+    function cancelMarketItem(uint256 itemId) public nonReentrant {
         bool sold = idToMarketItem[itemId].sold;
         bool canceled = idToMarketItem[itemId].canceled;
 
-        require(sold != true, "Marketplace: This Sale has already finished");
+        require(sold != true, "Marketplace: This item was already sold");
         require(
             canceled != true,
-            "Marketplace: This Sale has been canceled already"
+            "Marketplace: This item has been canceled already"
         );
         require(
             msg.sender == idToMarketItem[itemId].seller,
-            "Marketplace: You are not the owner of this Sale"
+            "Marketplace: You are not the owner of this item"
         );
 
         idToMarketItem[itemId].canceled = true;

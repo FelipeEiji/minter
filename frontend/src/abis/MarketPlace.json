@@ -119,7 +119,20 @@
           "type": "uint256"
         }
       ],
-      "name": "cancelMarketSale",
+      "name": "buyMarketItem",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "itemId",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelMarketItem",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -145,24 +158,6 @@
       "name": "createMarketItem",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "nftContract",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "itemId",
-          "type": "uint256"
-        }
-      ],
-      "name": "createMarketSale",
-      "outputs": [],
-      "stateMutability": "payable",
       "type": "function"
     }
   ]

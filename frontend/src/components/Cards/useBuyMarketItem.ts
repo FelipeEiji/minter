@@ -1,28 +1,26 @@
 import { useWeb3ExecuteFunction } from "react-moralis";
 import {
   MARKETPLACE_CONTRACT_ADDRESS,
-  NFT_CONTRACT_ADDRESS,
 } from "../../config/constants";
-import Marketplace from "../../../src/abis/MarketPlace.json";
+import Marketplace from "../../abis/MarketPlace.json";
 
 export type BuyRequest = { itemId: number, price: number }
 
-export const useCreateMarketSale = () => {
+export const useBuyMarketItem = () => {
   const {
-    fetch: _createMarketSale,
+    fetch: _buyMarketItem,
     isLoading,
   } = useWeb3ExecuteFunction({
     contractAddress: MARKETPLACE_CONTRACT_ADDRESS,
     abi: Marketplace.abi,
-    functionName: "createMarketSale",
+    functionName: "buyMarketItem",
   });
 
-  const createMarketSale = async ({ itemId, price }: BuyRequest) => {
+  const buyMarketItem = async ({ itemId, price }: BuyRequest) => {
     try {
-      const result = await _createMarketSale({
+      const result = await _buyMarketItem({
         params: {
           params: {
-            nftContract: NFT_CONTRACT_ADDRESS,
             itemId,
           },
           msgValue: Number(price),
@@ -35,5 +33,5 @@ export const useCreateMarketSale = () => {
     }
   };
 
-  return { isLoading, createMarketSale };
+  return { isLoading, buyMarketItem };
 };
