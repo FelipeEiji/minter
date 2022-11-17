@@ -13,7 +13,7 @@ export type StoreCardProps = {
 };
 
 const goToPolygonScanAddress = (address: string) => {
-  window.open(`https://mumbai.polygonscan.com/address/${address}`, "__blank");
+  window.open(`https://polygonscan.com/address/${address}`, "__blank");
 };
 
 const StoreCard: React.FC<StoreCardProps> = ({ marketItem }) => {

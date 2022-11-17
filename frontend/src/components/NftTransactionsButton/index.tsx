@@ -9,7 +9,7 @@ export type NftTransactionsProps = {
 
 const goToNftTransactions = (props: NftTransactionsProps) => {
   window.open(
-    `https://mumbai.polygonscan.com/token/${props.nftContract}?a=${props.tokenId}`,
+    `https://polygonscan.com/token/${props.nftContract}?a=${props.tokenId}`,
     "__blank"
   );
 };
